@@ -1,0 +1,27 @@
+<h2>
+    <i class="far fa-calendar-alt"></i>
+    <%= @ride[:date] %>
+</h2>
+<h1>RSVP for <%= @ride[:title] %></h1>
+
+<form action="/rides/<%= @ride[:id] %>/rsvps/create" method="POST">
+  <div class="form-group">
+    <label>Are you going?</label>
+    <select class="form-control" name="going">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </select>
+  </div>
+    <div class="form-group">
+    <label>Remain Anonymous?</label>
+    <select class="form-control" name="anon">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Comments</label>
+    <textarea class="form-control" rows="3" name="comments"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

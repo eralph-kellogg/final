@@ -15,7 +15,12 @@
                     <i class="fas fa-thumbs-down fa-3x mr-3"></i>
                 <% end %>
                 <div class="media-body">
-                    <h5 class="mt-0"><%= user[:name] %></h5>
+                    <h5 class="mt-0">
+                        <% if rsvp[:anonymous] %>
+                        <%= "Anonymous" %>
+                        <% else %>
+                            <%= user[:name] %></h5>
+                            <% end %>
                     <%= rsvp[:comments] %>
                 </div>
             </div>

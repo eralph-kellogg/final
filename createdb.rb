@@ -16,10 +16,12 @@ end
 DB.create_table! :rsvps do
   primary_key :id
   foreign_key :ride_id
+  foreign_key :user_id
   Boolean :going
   String :name
   String :email
   String :comments, text: true
+  Boolean :anonymous
 end
 DB.create_table! :users do
   primary_key :id
