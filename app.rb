@@ -19,30 +19,34 @@ rides_table = DB.from(:rides)
 rsvps_table = DB.from(:rsvps)
 users_table = DB.from(:users)
 
-before do
-    # SELECT * FROM users WHERE id = session[:user_id]
-    @current_user = users_table.where(:id => session[:user_id]).to_a[0]
-    puts @current_user.inspect
-end
+#before do
+#    # SELECT * FROM users WHERE id = session[:user_id]
+#    @current_user = users_table.where(:id => session[:user_id]).to_a[0]
+#    puts @current_user.inspect
+#end
 
 # Home page (all events)
 get "/" do
     # before stuff runs
-    @events = rides_table.all
+    @rides = rides_table.all
     view "rides"
 end
 
 # Show a single event
-#get "/events/:id" do
-#    @users_table = users_table
-#    # SELECT * FROM events WHERE id=:id
-#    @event = events_table.where(:id => params["id"]).to_a[0]
-#    # SELECT * FROM rsvps WHERE event_id=:id
-#    @rsvps = rsvps_table.where(:event_id => params["id"]).to_a
-#    # SELECT COUNT(*) FROM rsvps WHERE event_id=:id AND going=1
-#    @count = rsvps_table.where(:event_id => params["id"], :going => true).count
-#    view "event"
-#end
+get "/rides/:id" do
+    @users_table = users_table
+    # SELECT * FROM rides WHERE id=:id
+    @ride = rides_table.where(:id => params["id"]).to_a[0]
+    # SELECT * FROM rsvps WHERE ride_id=:id
+    @rsvps = rsvps_table.where(:ride_id => params["id"]).to_a
+    # SELECT COUNT(*) FROM rsvps WHERE ride_id=:id AND going=1
+    @count = rsvps_table.where(:ride_id => params["id"], :going => true).count
+
+    results = Geocoder.search(@ride[:address])
+    @lat_long = results.first.coordinates.join(",")
+
+    view "ride"
+end
 
 # Form to create a new RSVP
 #get "/events/:id/rsvps/new" do
